@@ -1,0 +1,33 @@
+:root {
+  --bg: linear-gradient(135deg, #c3d9ff, #f0e9ff);
+  --card-bg: rgba(255, 255, 255, 0.4);
+  --text: #222;
+  --accent: #5d4bff;
+}
+
+[data-theme="dark"] {
+  --bg: linear-gradient(135deg, #4b4b4b, #3c3c3c);
+  --card-bg: rgba(30, 30, 35, 0.7);
+  --text: #f7f7f7;
+  --accent: #392bb9;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
+  background: var(--bg);
+  color: var(--text);
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
