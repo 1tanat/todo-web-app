@@ -142,7 +142,6 @@ body {
 .category-tabs {
   display: flex;
   flex-wrap: nowrap;
-  gap: 6px;
   align-items: center;
   width: 100%;
   min-width: 0;
