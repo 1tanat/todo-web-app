@@ -9,7 +9,10 @@ body {
 }
 
 .TodoWrapper {
-  width: 420px;
+  min-width: 420px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   padding: 30px;
@@ -36,11 +39,12 @@ body {
 }
 
 .todo-input {
-  width: 100%;
+  flex: 1 1 0;
+  min-width: 0;
   padding: 14px;
   border-radius: 12px;
   border: none;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   outline: none;
   background: var(--card-bg);
   font-size: 16px;
@@ -70,12 +74,23 @@ body {
 }
 
 .todo-add-btn {
+  flex-shrink: 0;
   width: auto;
   white-space: nowrap;
+  margin-bottom: 0;
+  padding: 14px 18px 14px 14px;
+  background: linear-gradient(160deg, var(--accent) 0%, #7c6cff 100%);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .todo-btn:hover {
   background: #3b2df9;
+  transform: translateY(-2px);
+}
+
+.todo-add-btn:hover {
+  background: linear-gradient(160deg, #6d5cff 0%, #8b7cff 100%);
   transform: translateY(-2px);
 }
 
@@ -113,8 +128,8 @@ body {
 
 .theme-toggle {
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 30px;
+  top: 30px;
   background: var(--card-bg);
   padding: 10px 14px;
   border-radius: 12px;
@@ -126,29 +141,166 @@ body {
 
 .category-tabs {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
   background: var(--card-bg);
   padding: 8px;
   border-radius: 12px;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
-.category-tabs button {
-  flex: 1;
-  padding: 10px;
+.category-tab-btn {
+  flex: 1 1 0;
+  min-width: 120px;
+  padding: 10px 12px;
   font-size: 15px;
-  border-radius: 8px;
   border: none;
+  border-radius: 8px;
   background: transparent;
   color: var(--text);
   cursor: pointer;
   transition: 0.2s;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.category-tabs .active {
-  background: var(--accent);
+.category-tab-btn:hover,
+.category-tab-btn:focus {
+  background: linear-gradient(
+    160deg,
+    #d4e2fc 0%,
+    #e8e0f5 45%,
+    #f0ebf8 85%,
+    #d4e2fc 100%
+  );
+}
+
+[data-theme="dark"] .category-tab-btn:hover,
+[data-theme="dark"] .category-tab-btn:focus {
+  background: linear-gradient(
+    160deg,
+    #3d3d45 0%,
+    #35353d 50%,
+    #2d2d34 85%,
+    #3d3d45 100%
+  );
+}
+
+.category-tab-btn.active {
+  background: linear-gradient(160deg, var(--accent) 0%, #7c6cff 100%);
   color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Режим редактирования вкладки (двойной клик) */
+.category-tab--editing {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.category-tab-edit-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.category-tab-input {
+  flex: 1 1 0;
+  min-width: 100px;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 32px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.category-tab-input.too-long {
+  border-color: var(--error, #c62828);
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.2);
+}
+
+.category-tab-char-hint {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.category-tab-char-hint.too-long {
+  color: var(--error, #c62828);
+  opacity: 1;
+}
+
+.category-tab-action {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-tab-action:hover {
+  opacity: 1;
+  background: var(--bg);
+}
+
+.category-tab-action--delete:hover {
+  color: var(--error, #c62828);
+}
+
+.category-tab-action--save:hover {
+  color: var(--accent);
+}
+
+.category-tab-add {
+  flex-shrink: 0;
+  width: 40px;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.category-tab-add:hover {
+  opacity: 1;
+  background: var(--accent);
+  color: white;
 }
 
 @keyframes fadeIn {
