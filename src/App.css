@@ -111,6 +111,71 @@ body {
   opacity: 0.6;
 }
 
+.completed-early {
+  color: #2e9e4f;
+  text-decoration-color: #2e9e4f;
+  opacity: 1;
+}
+
+.completed-expired {
+  color: #e53935;
+  text-decoration-color: #e53935;
+  opacity: 1;
+}
+
+.todo-timer-badge {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 8px;
+  white-space: nowrap;
+}
+
+.todo-timer-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.todo-timer-input {
+  width: 54px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+
+.timer-icon:hover {
+  color: var(--accent);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-6px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.Todo.shake {
+  animation: shake 0.4s ease-in-out infinite;
+}
+
 .todo-buttons {
   display: flex;
   gap: 10px;

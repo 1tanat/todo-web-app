@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { defaultCategories } from "../constants";
 import { loadState, saveState } from "../utils/storage";
@@ -74,15 +74,78 @@ export function useTodoState() {
     }));
   };
 
-  const toggleComplete = (id) => {
-    if (!activeTab) return;
-    setTodos((prev) => ({
-      ...prev,
-      [activeTab]: (prev[activeTab] ?? []).map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-      ),
-    }));
-  };
+  const toggleComplete = useCallback(
+    (id) => {
+      if (!activeTab) return;
+      setTodos((prev) => ({
+        ...prev,
+        [activeTab]: (prev[activeTab] ?? []).map((todo) => {
+          if (todo.id !== id) return todo;
+          const completed = !todo.completed;
+          // Завершили вручную раньше времени — зачёркиваем, помечаем "досрочно" (зелёным) и снимаем таймер.
+          if (completed) {
+            return {
+              ...todo,
+              completed: true,
+              completedEarly: !!todo.timer,
+              completedExpired: false,
+              timer: null,
+            };
+          }
+          return {
+            ...todo,
+            completed: false,
+            completedEarly: false,
+            completedExpired: false,
+          };
+        }),
+      }));
+    },
+    [activeTab],
+  );
+
+  // Поставить таймер на задачу (длительность в миллисекундах).
+  const setTimer = useCallback(
+    (id, durationMs) => {
+      if (!activeTab) return;
+      setTodos((prev) => ({
+        ...prev,
+        [activeTab]: (prev[activeTab] ?? []).map((todo) =>
+          todo.id === id
+            ? {
+                ...todo,
+                completed: false,
+                completedEarly: false,
+                completedExpired: false,
+                timer: { duration: durationMs, endsAt: Date.now() + durationMs },
+              }
+            : todo,
+        ),
+      }));
+    },
+    [activeTab],
+  );
+
+  // Таймер истёк сам — зачёркиваем задачу и снимаем таймер.
+  const finishTimer = useCallback((id) => {
+    setTodos((prev) => {
+      const next = {};
+      for (const key of Object.keys(prev)) {
+        next[key] = prev[key].map((todo) =>
+          todo.id === id
+            ? {
+                ...todo,
+                completed: true,
+                completedEarly: false,
+                completedExpired: true,
+                timer: null,
+              }
+            : todo,
+        );
+      }
+      return next;
+    });
+  }, []);
 
   const deleteTodo = (id) => {
     if (!activeTab) return;
@@ -129,5 +192,7 @@ export function useTodoState() {
     deleteTodo,
     editTodo,
     editTask,
+    setTimer,
+    finishTimer,
   };
 }

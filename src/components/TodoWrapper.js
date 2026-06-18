@@ -24,6 +24,8 @@ export function TodoWrapper() {
     deleteTodo,
     editTodo,
     editTask,
+    setTimer,
+    finishTimer,
   } = useTodoState();
 
   const containerWidth = useContainerWidth(categories.length, tabEditing);
@@ -60,6 +62,8 @@ export function TodoWrapper() {
         deleteTodo={deleteTodo}
         editTodo={editTodo}
         editTask={editTask}
+        setTimer={setTimer}
+        finishTimer={finishTimer}
       />
     </div>
   );

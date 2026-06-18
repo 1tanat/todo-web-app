@@ -29,18 +29,30 @@ It allows users to add, edit, delete, and categorize tasks, with support for lig
 - Add, edit, and delete tasks
 - Mark tasks as completed
 - Categorize tasks (Work, Study, Personal)
+- **Task timers** — set a countdown on any task:
+  - The task color shifts green → yellow (halfway) → red (near the end)
+  - When time runs out it plays a sound, shakes for ~2 seconds, then gets crossed out and stays **red**
+  - Finishing a task early stops the timer, crosses it out, and turns it **green**
+  - Tasks with active timers float above regular ones; the less time left, the higher it sits
 - Light and dark theme toggle
 - Responsive layout
 - Smooth UI transitions
+- State is saved to `localStorage`
 
 ------
 
 - Добавление, редактирование и удаление задач
 - Отметка выполненных задач
 - Категоризация задач (работа, учёба, личные)
+- **Таймеры на задачи** — можно поставить обратный отсчёт:
+  - Цвет задачи меняется: зелёный → жёлтый (на половине) → красный (к концу)
+  - Когда время выходит — звучит сигнал, задача трясётся ~2 секунды, затем зачёркивается и остаётся **красной**
+  - Если выполнить задачу досрочно — таймер снимается, задача зачёркивается и становится **зелёной**
+  - Задачи с активными таймерами стоят выше обычных; чем меньше времени осталось, тем выше
 - Переключение между светлой и тёмной темами
 - Адаптивный дизайн
 - Плавные переходы
+- Состояние сохраняется в `localStorage`
 
 ## Contact
 
